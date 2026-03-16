@@ -1,138 +1,177 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HaxEmpire</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>HaxEmpire Stats</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <style>
     :root {
-      --bg:        #f4f6f8;
-      --surface:   #ffffff;
-      --card:      #ffffff;
-      --border:    #e2e6ea;
-      --accent:    #2563eb;
-      --accent2:   #ef4444;
-      --gold:      #d97706;
-      --silver:    #6b7280;
-      --bronze:    #b45309;
-      --text:      #111827;
-      --text2:     #374151;
-      --muted:     #9ca3af;
-      --red-team:  #dc2626;
-      --blue-team: #2563eb;
+      --bg:       #0a0f0a;
+      --surface:  #0d1a0d;
+      --card:     #111f11;
+      --card2:    #142014;
+      --border:   #1e3a1e;
+      --border2:  #2a4a2a;
+      --accent:   #00e676;
+      --accent2:  #ff5252;
+      --gold:     #ffd700;
+      --silver:   #c0c0c0;
+      --bronze:   #cd7f32;
+      --text:     #e8f5e9;
+      --text2:    #a5d6a7;
+      --muted:    #4a7a4a;
+      --yellow:   #ffeb3b;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
-    .wrap { max-width: 1140px; margin: 0 auto; padding: 0 20px 80px; }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;}
 
     /* Header */
-    header { background: #fff; border-bottom: 1px solid var(--border); padding: 0 20px; position: sticky; top: 0; z-index: 50; }
-    .header-inner { max-width: 1140px; margin: 0 auto; display: flex; align-items: center; gap: 12px; height: 60px; }
-    .logo-text { font-family: 'Space Mono', monospace; font-size: 1.1rem; font-weight: 700; letter-spacing: .05em; color: var(--text); }
-    .logo-text span { color: var(--accent); }
-    .header-sub { margin-left: auto; font-size: .75rem; color: var(--muted); }
+    header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 20px;position:sticky;top:0;z-index:50;}
+    .header-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:12px;height:56px;}
+    .logo{font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:700;color:var(--accent);letter-spacing:.1em;}
+    .header-sub{margin-left:auto;font-size:.75rem;color:var(--muted);}
 
     /* Tabs */
-    .tabs { display: flex; border-bottom: 1px solid var(--border); margin: 28px 0 0; background: #fff; border-radius: 10px 10px 0 0; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,.05); }
-    .tab-btn { padding: 13px 24px; font-family: 'DM Sans', sans-serif; font-size: .85rem; font-weight: 600; color: var(--muted); background: transparent; border: none; border-bottom: 2px solid transparent; margin-bottom: -1px; cursor: pointer; transition: all .15s; }
-    .tab-btn:hover { color: var(--text2); background: var(--bg); }
-    .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); background: #fff; }
+    .tabs-wrap{background:var(--surface);border-bottom:1px solid var(--border);}
+    .tabs{max-width:1100px;margin:0 auto;display:flex;padding:0 20px;}
+    .tab-btn{padding:12px 20px;font-family:'Rajdhani',sans-serif;font-size:.85rem;font-weight:600;letter-spacing:.06em;color:var(--muted);background:transparent;border:none;border-bottom:2px solid transparent;margin-bottom:-1px;cursor:pointer;transition:all .15s;text-transform:uppercase;}
+    .tab-btn:hover{color:var(--text2);}
+    .tab-btn.active{color:var(--accent);border-bottom-color:var(--accent);}
+
+    .wrap{max-width:1100px;margin:0 auto;padding:24px 20px 60px;}
 
     /* Refresh */
-    .refresh-row { display: flex; justify-content: flex-end; align-items: center; gap: 10px; margin: 16px 0; }
-    .refresh-row span { font-size: .8rem; color: var(--muted); }
-    .refresh-btn { padding: 6px 14px; font-family: 'DM Sans', sans-serif; font-size: .78rem; font-weight: 600; background: var(--accent); color: #fff; border: none; border-radius: 6px; cursor: pointer; transition: opacity .15s; }
-    .refresh-btn:hover { opacity: .85; }
+    .refresh-row{display:flex;justify-content:flex-end;align-items:center;gap:10px;margin-bottom:20px;}
+    .refresh-row span{font-size:.78rem;color:var(--muted);}
+    .refresh-btn{padding:6px 14px;font-family:'Rajdhani',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.06em;background:transparent;border:1px solid var(--accent);color:var(--accent);border-radius:6px;cursor:pointer;transition:all .2s;}
+    .refresh-btn:hover{background:var(--accent);color:#000;}
 
-    /* Streak */
-    .streak-bar { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin-bottom: 20px; }
-    .streak-card { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; box-shadow: 0 1px 3px rgba(0,0,0,.04); }
-    .streak-card .s-label { font-size: .72rem; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 6px; }
-    .streak-card .s-val { font-family: 'Space Mono', monospace; font-size: 1.3rem; font-weight: 700; color: var(--text); }
-    .streak-card.red  .s-val { color: var(--red-team); }
-    .streak-card.blue .s-val { color: var(--blue-team); }
-    .streak-card.gold .s-val { color: var(--gold); }
-    .streak-card.time .s-val { font-size: .82rem; color: var(--muted); }
+    /* Section title */
+    .section-title{display:flex;align-items:center;gap:10px;font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:700;letter-spacing:.12em;color:var(--text2);text-transform:uppercase;margin-bottom:16px;}
+    .section-title .icon{font-size:1.1rem;}
 
-    /* Boards */
-    .boards { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; margin-bottom: 20px; }
-    .board { background: #fff; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,.04); }
-    .board-head { padding: 12px 16px; font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text2); border-bottom: 1px solid var(--border); background: var(--bg); }
-    .board-row { display: flex; align-items: center; gap: 10px; padding: 9px 16px; border-bottom: 1px solid var(--border); cursor: pointer; transition: background .1s; }
-    .board-row:last-child { border-bottom: none; }
-    .board-row:hover { background: #eff6ff; }
-    .board-rank { width: 22px; text-align: center; font-family: 'Space Mono', monospace; font-size: .72rem; font-weight: 700; flex-shrink: 0; }
-    .r1 { color: var(--gold); } .r2 { color: var(--silver); } .r3 { color: var(--bronze); } .r-other { color: var(--muted); }
-    .board-name { flex: 1; font-size: .88rem; font-weight: 500; }
-    .board-val { font-family: 'Space Mono', monospace; font-size: .82rem; font-weight: 700; color: var(--accent); }
-    .board-empty { padding: 20px 16px; color: var(--muted); font-size: .85rem; text-align: center; }
+    /* Stat cards */
+    .stat-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:28px;}
+    .stat-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:20px;text-align:center;}
+    .stat-card .sc-icon{font-size:1.6rem;margin-bottom:8px;opacity:.7;}
+    .stat-card .sc-val{font-family:'Rajdhani',sans-serif;font-size:2rem;font-weight:700;color:var(--accent);line-height:1;}
+    .stat-card .sc-label{font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:6px;}
+
+    /* Search */
+    .search-wrap{position:relative;margin-bottom:28px;}
+    .search-wrap input{width:100%;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 44px 12px 40px;color:var(--text);font-size:.9rem;outline:none;transition:border-color .2s;}
+    .search-wrap input:focus{border-color:var(--accent);}
+    .search-wrap input::placeholder{color:var(--muted);}
+    .search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:.9rem;}
+    .search-kbd{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:var(--border);color:var(--muted);font-size:.7rem;padding:2px 6px;border-radius:4px;}
+
+    /* Leaderboard header */
+    .lb-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+    .top-btn{font-family:'Rajdhani',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.08em;padding:5px 12px;background:var(--card2);border:1px solid var(--border2);color:var(--text2);border-radius:6px;}
+
+    /* Podium */
+    .podium{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:12px;margin-bottom:16px;}
+    .podium-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 16px;text-align:center;position:relative;}
+    .podium-card.first{background:linear-gradient(135deg,#1a2a10,#162610);border-color:#3a5a1a;}
+    .podium-card .medal{font-size:2rem;margin-bottom:8px;display:block;}
+    .podium-card .rank-label{font-family:'Rajdhani',sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:4px;}
+    .podium-card .player-name{font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:10px;}
+    .podium-card.first .player-name{font-size:1.25rem;color:var(--gold);}
+    .podium-stats{display:flex;justify-content:center;gap:20px;margin-bottom:10px;}
+    .podium-stats .ps-item{text-align:center;}
+    .podium-stats .ps-val{font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:700;}
+    .podium-stats .ps-val.green{color:var(--accent);}
+    .podium-stats .ps-val.red{color:var(--accent2);}
+    .podium-stats .ps-label{font-size:.6rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);}
+    .wr-bar-wrap{display:flex;align-items:center;gap:8px;}
+    .wr-bar{height:4px;border-radius:2px;background:var(--border);flex:1;overflow:hidden;}
+    .wr-fill{height:100%;border-radius:2px;}
+    .wr-fill.gold{background:linear-gradient(90deg,#ff9800,#ffd700);}
+    .wr-fill.silver{background:linear-gradient(90deg,#78909c,#b0bec5);}
+    .wr-fill.bronze{background:linear-gradient(90deg,#8d6e63,#cd7f32);}
+    .wr-fill.green{background:linear-gradient(90deg,#00c853,#00e676);}
+    .wr-text{font-family:'Rajdhani',sans-serif;font-size:.85rem;font-weight:700;min-width:42px;text-align:right;}
+
+    /* Unlucky player */
+    .unlucky-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 20px;margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+    .unlucky-icon{font-size:1.3rem;}
+    .unlucky-text{font-size:.85rem;color:var(--muted);}
+    .unlucky-name{color:var(--yellow);font-weight:700;}
+    .unlucky-stats{color:var(--muted);font-size:.8rem;}
 
     /* Table */
-    .full-table-wrap { background: #fff; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,.04); }
-    .full-table-head { padding: 12px 16px; font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text2); border-bottom: 1px solid var(--border); background: var(--bg); }
-    table { width: 100%; border-collapse: collapse; font-size: .85rem; }
-    thead th { padding: 10px 14px; text-align: left; font-size: .7rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); background: var(--bg); border-bottom: 1px solid var(--border); cursor: pointer; user-select: none; white-space: nowrap; }
-    thead th:hover { color: var(--accent); }
-    tbody tr { border-bottom: 1px solid var(--border); cursor: pointer; transition: background .1s; }
-    tbody tr:last-child { border-bottom: none; }
-    tbody tr:hover { background: #eff6ff; }
-    td { padding: 9px 14px; color: var(--text2); }
-    td.rank { font-family:'Space Mono',monospace; font-size:.7rem; color:var(--muted); }
-    td.name-cell { font-weight: 600; color: var(--text); }
-    td.num { font-family:'Space Mono',monospace; font-size:.8rem; color:var(--accent); }
-    .wr-bar-wrap { display:flex; align-items:center; gap:8px; }
-    .wr-bar { height:5px; border-radius:3px; background:var(--border); flex:1; overflow:hidden; min-width:60px; }
-    .wr-fill { height:100%; border-radius:3px; background:linear-gradient(90deg,var(--accent2),var(--accent)); }
-    .klasman-badge { display:inline-block; font-size:.68rem; font-weight:600; padding:2px 8px; border-radius:20px; background:#eff6ff; color:var(--accent); border:1px solid #bfdbfe; white-space:nowrap; }
+    .table-wrap{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+    .table-head-row{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border);}
+    .table-head-row .t-title{font-family:'Rajdhani',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+    .table-head-row .t-count{font-size:.75rem;color:var(--muted);}
+    table{width:100%;border-collapse:collapse;}
+    thead th{padding:10px 16px;text-align:left;font-family:'Rajdhani',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);background:var(--surface);cursor:pointer;white-space:nowrap;user-select:none;}
+    thead th:hover{color:var(--accent);}
+    thead th .sort-arrow{margin-left:4px;opacity:.5;}
+    thead th.sorted{color:var(--accent);}
+    thead th.sorted .sort-arrow{opacity:1;}
+    tbody tr{border-bottom:1px solid rgba(30,58,30,.5);cursor:pointer;transition:background .1s;}
+    tbody tr:last-child{border-bottom:none;}
+    tbody tr:hover{background:rgba(0,230,118,.04);}
+    td{padding:10px 16px;font-size:.85rem;}
+    td.rank-cell{font-family:'Rajdhani',sans-serif;font-size:.8rem;color:var(--muted);width:40px;}
+    td.name-cell{font-weight:600;color:var(--text);}
+    td.num{font-family:'Rajdhani',sans-serif;font-size:.9rem;}
+    td.num.green{color:var(--accent);}
+    td.num.red{color:var(--accent2);}
+    .wr-cell-wrap{display:flex;align-items:center;gap:8px;}
+    .wr-mini-bar{height:3px;border-radius:2px;background:var(--border);width:60px;overflow:hidden;}
+    .wr-mini-fill{height:100%;border-radius:2px;background:var(--accent);}
 
     /* Modal */
-    .modal-bg { display:none; position:fixed; inset:0; background:rgba(0,0,0,.3); backdrop-filter:blur(4px); z-index:100; align-items:center; justify-content:center; }
-    .modal-bg.open { display:flex; }
-    .modal { background:#fff; border:1px solid var(--border); border-radius:14px; padding:28px; max-width:420px; width:92%; position:relative; box-shadow:0 20px 60px rgba(0,0,0,.12); }
-    .modal-close { position:absolute; top:14px; right:16px; background:none; border:none; color:var(--muted); font-size:1.2rem; cursor:pointer; }
-    .modal-close:hover { color:var(--accent2); }
-    .modal h2 { font-family:'Space Mono',monospace; font-size:1.1rem; color:var(--text); margin-bottom:4px; }
-    .modal-klasman { font-size:.83rem; color:var(--muted); margin-bottom:20px; }
-    .stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-    .stat-item { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:12px; }
-    .stat-item .s-label { font-size:.65rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin-bottom:4px; }
-    .stat-item .s-val { font-family:'Space Mono',monospace; font-size:1.1rem; font-weight:700; color:var(--text); }
-    .stat-item.highlight .s-val { color:var(--accent); }
+    .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);z-index:100;align-items:center;justify-content:center;}
+    .modal-bg.open{display:flex;}
+    .modal{background:var(--card);border:1px solid var(--border2);border-radius:14px;padding:28px;max-width:440px;width:92%;position:relative;box-shadow:0 0 60px rgba(0,230,118,.1);}
+    .modal-close{position:absolute;top:14px;right:16px;background:none;border:none;color:var(--muted);font-size:1.2rem;cursor:pointer;}
+    .modal-close:hover{color:var(--accent2);}
+    .modal h2{font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:700;color:var(--accent);margin-bottom:4px;}
+    .modal-klasman{font-size:.83rem;color:var(--muted);margin-bottom:20px;}
+    .modal-stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+    .modal-stat{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px;}
+    .modal-stat .ms-label{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:4px;}
+    .modal-stat .ms-val{font-family:'Rajdhani',sans-serif;font-size:1.2rem;font-weight:700;color:var(--text);}
+    .modal-stat.highlight .ms-val{color:var(--accent);}
 
-    .tab-content { display:none; }
-    .tab-content.active { display:block; }
-    .loading { text-align:center; padding:60px; color:var(--muted); font-size:.85rem; }
+    .tab-content{display:none;}
+    .tab-content.active{display:block;}
+    .loading{text-align:center;padding:60px;color:var(--muted);font-family:'Rajdhani',sans-serif;font-size:.9rem;letter-spacing:.1em;}
+    .flame{display:inline-block;}
   </style>
 </head>
 <body>
 
 <header>
   <div class="header-inner">
-    <span style="font-size:1.4rem">⚽</span>
-    <span class="logo-text">HAX<span>EMPIRE</span></span>
-    <span class="header-sub">Canlı İstatistikler · Otomatik Güncellenir</span>
+    <span class="logo">⚽ HAXEMPIRE</span>
+    <span class="header-sub">Canlı İstatistikler</span>
   </div>
 </header>
 
-<div class="wrap">
+<div class="tabs-wrap">
   <div class="tabs">
     <button class="tab-btn active" onclick="switchTab('spaceBounce',this)">v3 SpaceBounceBrakes</button>
     <button class="tab-btn"        onclick="switchTab('zawBall',this)">v4 ZawBall</button>
     <button class="tab-btn"        onclick="switchTab('longBounce',this)">v3 LongBounce</button>
     <button class="tab-btn"        onclick="switchTab('v4SpaceBounce',this)">v4 SpaceBounceBrakes</button>
   </div>
+</div>
 
+<div class="wrap">
   <div class="refresh-row">
     <span id="refresh-info">Yükleniyor...</span>
-    <button class="refresh-btn" onclick="loadAll()">↻ Yenile</button>
+    <button class="refresh-btn" onclick="loadAll()">↻ YENİLE</button>
   </div>
 
-  <div id="tab-spaceBounce" class="tab-content active"><div id="content-spaceBounce"><div class="loading">Yükleniyor...</div></div></div>
-  <div id="tab-zawBall"     class="tab-content">         <div id="content-zawBall">    <div class="loading">Yükleniyor...</div></div></div>
-  <div id="tab-longBounce"  class="tab-content">         <div id="content-longBounce"> <div class="loading">Yükleniyor...</div></div></div>
-  <div id="tab-v4SpaceBounce" class="tab-content">       <div id="content-v4SpaceBounce"><div class="loading">Yükleniyor...</div></div></div>
+  <div id="tab-spaceBounce"   class="tab-content active"><div id="content-spaceBounce"  ><div class="loading">YÜKLENİYOR...</div></div></div>
+  <div id="tab-zawBall"       class="tab-content">        <div id="content-zawBall"      ><div class="loading">YÜKLENİYOR...</div></div></div>
+  <div id="tab-longBounce"    class="tab-content">        <div id="content-longBounce"   ><div class="loading">YÜKLENİYOR...</div></div></div>
+  <div id="tab-v4SpaceBounce" class="tab-content">        <div id="content-v4SpaceBounce"><div class="loading">YÜKLENİYOR...</div></div></div>
 </div>
 
 <div class="modal-bg" id="modal-bg" onclick="closeModal(event)">
@@ -140,13 +179,14 @@
     <button class="modal-close" onclick="closeModal()">✕</button>
     <h2 id="modal-name"></h2>
     <div class="modal-klasman" id="modal-klasman"></div>
-    <div class="stat-grid" id="modal-stats"></div>
+    <div class="modal-stat-grid" id="modal-stats"></div>
   </div>
 </div>
 
 <script>
 const FIREBASE_URL = "https://haxball-stats-21685-default-rtdb.europe-west1.firebasedatabase.app";
 let cache = {};
+let sortState = { key: 'wr', dir: -1 };
 
 function switchTab(key, btn) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -172,73 +212,215 @@ async function loadAll() {
 }
 
 const winRate = p => p.totalGameCount ? Math.floor(((p.totalGameCount - p.loseCount) / p.totalGameCount) * 100) : 0;
-const genelPuan = p => p.goalCount * 2 + p.asistCount + (p.totalGameCount - p.loseCount) * 3;
+const wins = p => p.totalGameCount - p.loseCount;
+const genelPuan = p => p.goalCount * 2 + p.asistCount + wins(p) * 3;
+
 function klasman(wr) {
   if (wr < 35) return "🎈 Çömez"; if (wr < 40) return "⚽ Çaylak"; if (wr < 45) return "🥉 Acemi";
   if (wr < 55) return "🥈 Ortalama"; if (wr < 60) return "🏅 Tecrübeli"; if (wr < 65) return "⭐ Usta";
   if (wr < 70) return "⭐⭐ Üst Düzey"; if (wr < 75) return "⭐⭐⭐ Profesyonel"; return "💎 Efsanevi";
 }
-const rankBadge = i => ['<span class="board-rank r1">🥇</span>','<span class="board-rank r2">🥈</span>','<span class="board-rank r3">🥉</span>'][i] || `<span class="board-rank r-other">${i+1}</span>`;
-const topN = (recs, fn, n) => [...recs].map(p=>({p,v:fn(p)})).filter(x=>x.v>0).sort((a,b)=>b.v-a.v).slice(0,n);
+
+function badge(p) {
+  const wr = winRate(p);
+  if (wr >= 80) return ' 🔥';
+  if (wr >= 60) return ' ⭐';
+  return '';
+}
 
 function renderBot(key, data) {
   const el = document.getElementById('content-' + key);
-  if (!data || !data.records || !data.records.length) { el.innerHTML = '<div class="loading">Henüz kayıtlı istatistik yok.</div>'; return; }
+  if (!data || !data.records || !data.records.length) {
+    el.innerHTML = '<div class="loading">Henüz kayıtlı istatistik yok.</div>'; return;
+  }
+
   const records = data.records.filter(p => p.totalGameCount > 0);
-  const ranked  = records.filter(p => p.totalGameCount >= 50);
-  const lastUp  = data.lastUpdated ? new Date(data.lastUpdated).toLocaleString('tr-TR') : '—';
+  const qualified = records.filter(p => p.totalGameCount >= 10);
+  const sorted = [...records].sort((a,b) => winRate(b) - winRate(a));
+  const top3 = qualified.sort((a,b) => winRate(b) - winRate(a)).slice(0, 3);
+  const rest = qualified.slice(3);
 
-  let html = `<div class="streak-bar">
-    <div class="streak-card red"><div class="s-label">🔴 Kırmızı Serisi</div><div class="s-val">${data.redStreak||0} maç</div></div>
-    <div class="streak-card blue"><div class="s-label">🔵 Mavi Serisi</div><div class="s-val">${data.blueStreak||0} maç</div></div>
-    <div class="streak-card gold"><div class="s-label">🏆 Rekor Seri</div><div class="s-val">${data.streak||0} maç</div></div>
-    <div class="streak-card time"><div class="s-label">🕐 Son Güncelleme</div><div class="s-val">${lastUp}</div></div>
-  </div><div class="boards">`;
+  // Unlucky: en çok maç oynamış en düşük oran
+  const unlucky = [...records].filter(p=>p.totalGameCount>=5).sort((a,b) => winRate(a)-winRate(b))[0];
 
-  [{title:'🏅 Genel Puan',fn:genelPuan},{title:'⚽ Gol Sıralaması',fn:p=>p.goalCount},{title:'🎯 Asist',fn:p=>p.asistCount},{title:'📈 Kazanma %',fn:winRate,min:50}].forEach(b => {
-    const top = topN(b.min ? ranked : records, b.fn, 8);
-    html += `<div class="board"><div class="board-head">${b.title}</div>`;
-    if (!top.length) { html += '<div class="board-empty">Veri yok</div>'; }
-    else top.forEach((x,i) => { html += `<div class="board-row" onclick="openModal(${JSON.stringify(x.p).replace(/"/g,'&quot;')})">${rankBadge(i)}<span class="board-name">${x.p.userName}</span><span class="board-val">${x.v}${b.fn===winRate?'%':''}</span></div>`; });
-    html += '</div>';
-  });
+  // Stats
+  const totalGames = records.reduce((s,p)=>s+p.totalGameCount,0)/2|0;
+  const totalWins  = records.reduce((s,p)=>s+wins(p),0)/2|0;
+  const bestWR     = qualified.length ? Math.max(...qualified.map(winRate)) : 0;
 
-  html += `</div><div class="full-table-wrap"><div class="full-table-head">📋 Tüm Oyuncular</div><div style="overflow-x:auto"><table>
-    <thead><tr><th>#</th><th>Oyuncu</th><th>Maç</th><th>Gol</th><th>Asist</th><th>Kazanma %</th><th>Puan</th><th>Klasman</th></tr></thead><tbody>`;
+  let html = `
+  <div class="section-title"><span class="icon">📊</span> GENEL İSTATİSTİKLER</div>
+  <div class="stat-cards">
+    <div class="stat-card"><div class="sc-icon">👥</div><div class="sc-val">${records.length}</div><div class="sc-label">Kayıtlı Oyuncu</div></div>
+    <div class="stat-card"><div class="sc-icon">🎮</div><div class="sc-val">${totalGames}</div><div class="sc-label">Toplam Maç</div></div>
+    <div class="stat-card"><div class="sc-icon">🏆</div><div class="sc-val">%${bestWR}</div><div class="sc-label">En İyi Oran</div></div>
+    <div class="stat-card"><div class="sc-icon">⚡</div><div class="sc-val">${totalWins}</div><div class="sc-label">Toplam Galibiyet</div></div>
+  </div>
 
-  [...records].sort((a,b)=>genelPuan(b)-genelPuan(a)).forEach((p,i) => {
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="search-${key}" placeholder="Oyuncu ara..." oninput="filterTable('${key}')"/>
+    <span class="search-kbd">/</span>
+  </div>
+
+  <div class="lb-header">
+    <div class="section-title" style="margin-bottom:0"><span class="icon">🏆</span> LİDERLİK TABLOSU</div>
+    <span class="top-btn">TOP 10</span>
+  </div>`;
+
+  // Podium
+  if (top3.length >= 1) {
+    const p1 = top3[0], p2 = top3[1] || null, p3 = top3[2] || null;
+    const podiumCard = (p, rank, medal, cls, fillCls) => p ? `
+      <div class="podium-card ${cls}" onclick="openModal(${JSON.stringify(p).replace(/"/g,'&quot;')})">
+        <span class="medal">${medal}</span>
+        <div class="rank-label">${rank}. SIRA</div>
+        <div class="player-name">${p.userName}${badge(p)}</div>
+        <div class="podium-stats">
+          <div class="ps-item"><div class="ps-val green">${wins(p)}</div><div class="ps-label">Galibiyet</div></div>
+          <div class="ps-item"><div class="ps-val red">${p.loseCount}</div><div class="ps-label">Yenilgi</div></div>
+        </div>
+        <div class="wr-bar-wrap">
+          <div class="wr-bar"><div class="wr-fill ${fillCls}" style="width:${winRate(p)}%"></div></div>
+          <span class="wr-text">${winRate(p)}%</span>
+        </div>
+      </div>` : '<div class="podium-card"><div class="rank-label">—</div></div>';
+
+    html += `<div class="podium">
+      ${podiumCard(p2, 2, '🥈', '', 'silver')}
+      ${podiumCard(p1, 1, '🥇', 'first', 'gold')}
+      ${podiumCard(p3, 3, '🥉', '', 'bronze')}
+    </div>`;
+  }
+
+  // Unlucky player
+  if (unlucky) {
+    html += `<div class="unlucky-card">
+      <span class="unlucky-icon">😵</span>
+      <div>
+        <span class="unlucky-text">Şanssız Oyuncu: </span>
+        <span class="unlucky-name">${unlucky.userName}</span>
+        <span class="unlucky-stats"> (${unlucky.totalGameCount} maç / ${unlucky.loseCount}Y · ${winRate(unlucky)}%)</span>
+      </div>
+    </div>`;
+  }
+
+  // Table
+  const tableRows = [...records].sort((a,b) => winRate(b) - winRate(a));
+  html += `
+  <div class="table-wrap">
+    <div class="table-head-row">
+      <span class="t-title">DİĞER OYUNCULAR</span>
+      <span class="t-count" id="tcount-${key}">4-10 / ${records.length} oyuncu</span>
+    </div>
+    <div style="overflow-x:auto">
+    <table id="table-${key}">
+      <thead><tr>
+        <th>#</th>
+        <th>Oyuncu</th>
+        <th onclick="sortTable('${key}','wins')" id="th-wins-${key}">GALİBİYET <span class="sort-arrow">↕</span></th>
+        <th onclick="sortTable('${key}','lose')" id="th-lose-${key}">YENİLGİ <span class="sort-arrow">↕</span></th>
+        <th onclick="sortTable('${key}','wr')" id="th-wr-${key}" class="sorted">ORAN <span class="sort-arrow">↓</span></th>
+      </tr></thead>
+      <tbody id="tbody-${key}">`;
+
+  tableRows.forEach((p, i) => {
     const wr = winRate(p);
+    const col = wr >= 70 ? '#00e676' : wr >= 50 ? '#69f0ae' : wr >= 35 ? '#ffeb3b' : '#ff5252';
     html += `<tr onclick="openModal(${JSON.stringify(p).replace(/"/g,'&quot;')})">
-      <td class="rank">${i+1}</td><td class="name-cell">${p.userName}</td>
-      <td class="num">${p.totalGameCount}</td><td class="num">${p.goalCount}</td><td class="num">${p.asistCount}</td>
-      <td><div class="wr-bar-wrap"><div class="wr-bar"><div class="wr-fill" style="width:${wr}%"></div></div><span style="font-size:.8rem;min-width:34px">%${wr}</span></div></td>
-      <td class="num">${genelPuan(p)}</td>
-      <td>${p.totalGameCount>=50?`<span class="klasman-badge">${klasman(wr)}</span>`:'<span style="color:var(--muted);font-size:.75rem">—</span>'}</td>
+      <td class="rank-cell">${i+1}</td>
+      <td class="name-cell">${p.userName}${badge(p)}</td>
+      <td class="num green">${wins(p)}</td>
+      <td class="num red">${p.loseCount}</td>
+      <td>
+        <div class="wr-cell-wrap">
+          <div class="wr-mini-bar"><div class="wr-mini-fill" style="width:${wr}%;background:${col}"></div></div>
+          <span style="font-family:'Rajdhani',sans-serif;font-size:.85rem;font-weight:700;color:${col};min-width:42px">${wr}%</span>
+        </div>
+      </td>
     </tr>`;
   });
-  html += '</tbody></table></div></div>';
+
+  html += `</tbody></table></div></div>`;
   el.innerHTML = html;
 }
 
+function filterTable(key) {
+  const q = document.getElementById('search-' + key).value.toLowerCase();
+  const rows = document.querySelectorAll('#tbody-' + key + ' tr');
+  let shown = 0;
+  rows.forEach(r => {
+    const name = r.cells[1].textContent.toLowerCase();
+    const vis = name.includes(q);
+    r.style.display = vis ? '' : 'none';
+    if (vis) shown++;
+  });
+  const cnt = document.getElementById('tcount-' + key);
+  if (cnt) cnt.textContent = `${shown} oyuncu`;
+}
+
+let sortDirs = {};
+function sortTable(key, col) {
+  const dk = key + col;
+  sortDirs[dk] = (sortDirs[dk] || 1) * -1;
+  const dir = sortDirs[dk];
+
+  // Reset headers
+  ['wins','lose','wr'].forEach(c => {
+    const th = document.getElementById('th-'+c+'-'+key);
+    if (th) { th.classList.remove('sorted'); th.querySelector('.sort-arrow').textContent = '↕'; }
+  });
+  const th = document.getElementById('th-'+col+'-'+key);
+  if (th) { th.classList.add('sorted'); th.querySelector('.sort-arrow').textContent = dir === -1 ? '↓' : '↑'; }
+
+  const tbody = document.getElementById('tbody-' + key);
+  if (!tbody) return;
+  const rows = Array.from(tbody.querySelectorAll('tr'));
+  rows.sort((a, b) => {
+    const getVal = r => {
+      if (col === 'wins') return parseInt(r.cells[2].textContent) || 0;
+      if (col === 'lose') return parseInt(r.cells[3].textContent) || 0;
+      if (col === 'wr')   return parseFloat(r.cells[4].textContent) || 0;
+    };
+    return (getVal(a) - getVal(b)) * dir;
+  });
+  rows.forEach(r => tbody.appendChild(r));
+  // Re-number
+  rows.forEach((r, i) => { if (r.style.display !== 'none') r.cells[0].textContent = i+1; });
+}
+
 function openModal(p) {
-  const wr = winRate(p), wins = p.totalGameCount - p.loseCount;
-  document.getElementById('modal-name').textContent = p.userName;
-  document.getElementById('modal-klasman').textContent = p.totalGameCount >= 50 ? klasman(wr) : 'Henüz sıralanmadı (50 maç gerekli)';
+  const wr = winRate(p), w = wins(p);
+  const gpm = p.totalGameCount ? (p.goalCount/p.totalGameCount).toFixed(2) : '0';
+  const apm = p.totalGameCount ? (p.asistCount/p.totalGameCount).toFixed(2) : '0';
+  document.getElementById('modal-name').textContent = p.userName + badge(p);
+  document.getElementById('modal-klasman').textContent = p.totalGameCount >= 10 ? klasman(wr) : 'Henüz sıralanmadı (10 maç gerekli)';
   document.getElementById('modal-stats').innerHTML = `
-    <div class="stat-item highlight"><div class="s-label">Genel Puan</div><div class="s-val">${genelPuan(p)}</div></div>
-    <div class="stat-item"><div class="s-label">Toplam Maç</div><div class="s-val">${p.totalGameCount}</div></div>
-    <div class="stat-item"><div class="s-label">Galibiyet</div><div class="s-val">${wins}</div></div>
-    <div class="stat-item"><div class="s-label">Mağlubiyet</div><div class="s-val">${p.loseCount}</div></div>
-    <div class="stat-item"><div class="s-label">Kazanma %</div><div class="s-val">%${wr}</div></div>
-    <div class="stat-item"><div class="s-label">Gol</div><div class="s-val">${p.goalCount} <span style="font-size:.65rem;color:var(--muted)">(${p.totalGameCount?(p.goalCount/p.totalGameCount).toFixed(2):0}/maç)</span></div></div>
-    <div class="stat-item"><div class="s-label">Asist</div><div class="s-val">${p.asistCount} <span style="font-size:.65rem;color:var(--muted)">(${p.totalGameCount?(p.asistCount/p.totalGameCount).toFixed(2):0}/maç)</span></div></div>
-    <div class="stat-item"><div class="s-label">Admin</div><div class="s-val">${p.isAdmin?'✅':'—'}</div></div>`;
+    <div class="modal-stat highlight"><div class="ms-label">Kazanma %</div><div class="ms-val">%${wr}</div></div>
+    <div class="modal-stat"><div class="ms-label">Toplam Maç</div><div class="ms-val">${p.totalGameCount}</div></div>
+    <div class="modal-stat"><div class="ms-label">Galibiyet</div><div class="ms-val">${w}</div></div>
+    <div class="modal-stat"><div class="ms-label">Mağlubiyet</div><div class="ms-val">${p.loseCount}</div></div>
+    <div class="modal-stat"><div class="ms-label">Gol</div><div class="ms-val">${p.goalCount} <small style="font-size:.65rem;color:var(--muted)">(${gpm}/m)</small></div></div>
+    <div class="modal-stat"><div class="ms-label">Asist</div><div class="ms-val">${p.asistCount} <small style="font-size:.65rem;color:var(--muted)">(${apm}/m)</small></div></div>
+    <div class="modal-stat"><div class="ms-label">Genel Puan</div><div class="ms-val">${genelPuan(p)}</div></div>
+    <div class="modal-stat"><div class="ms-label">Admin</div><div class="ms-val">${p.isAdmin?'✅':'—'}</div></div>`;
   document.getElementById('modal-bg').classList.add('open');
 }
 function closeModal(e) {
-  if (!e || e.target===document.getElementById('modal-bg') || e.currentTarget.classList.contains('modal-close'))
+  if (!e || e.target === document.getElementById('modal-bg') || e.currentTarget.classList.contains('modal-close'))
     document.getElementById('modal-bg').classList.remove('open');
 }
+
+// Keyboard shortcut for search
+document.addEventListener('keydown', e => {
+  if (e.key === '/') {
+    const activeTab = document.querySelector('.tab-btn.active');
+    if (!activeTab) return;
+    const key = activeTab.getAttribute('onclick').match(/'(\w+)'/)[1];
+    const inp = document.getElementById('search-' + key);
+    if (inp) { e.preventDefault(); inp.focus(); }
+  }
+});
 
 loadAll();
 setInterval(loadAll, 60000);
